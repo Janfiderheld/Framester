@@ -16,3 +16,12 @@ class Movie:
 
     def get_img(self) -> str:
         return self.__image
+
+    def __eq__(self, other) -> bool:
+        """Overrides the default implementation"""
+        if isinstance(other, Movie):
+            return (self.__name == other.__name) & (self.__director == other.__director) & (self.__year == other.__year)
+        return False
+
+    def __str__(self) -> str:
+        return f"{self.__name} ({self.__year}) from {self.__director}"

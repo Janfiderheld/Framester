@@ -1,4 +1,6 @@
 from PySide6 import QtWidgets, QtCore
+from inout import MovieHandler
+from model import Movie
 
 
 class AdditionUI(QtWidgets.QWidget):
@@ -6,6 +8,7 @@ class AdditionUI(QtWidgets.QWidget):
         super().__init__()
 
         self.__btn_add = QtWidgets.QPushButton("Add Movie")
+        self.__btn_save = QtWidgets.QPushButton("Save additions")
 
         self.__txt_name = QtWidgets.QLabel("Name:")
         self.__txt_direct = QtWidgets.QLabel("Director:")
@@ -27,8 +30,11 @@ class AdditionUI(QtWidgets.QWidget):
         self.layout.addWidget(self.__txt_img)
         self.layout.addWidget(self.__ed_img)
         self.layout.addWidget(self.__btn_add)
+        self.layout.addWidget(self.__btn_save)
 
         self.__btn_add.clicked.connect(self.add_movie)
+        self.__btn_save.clicked.connect(self.save_movies)
+        self.__movie_handler = MovieHandler()
 
     @QtCore.Slot()
     def add_movie(self):
@@ -41,9 +47,16 @@ class AdditionUI(QtWidgets.QWidget):
         if not self.__ed_year.text():
             print("Year is empty")
             return
+        if not self.__ed_year.text().isdigit():
+            print("Year is not a number")
+            return
         if not self.__ed_img.text():
             print("Image URL is empty")
             return
 
-        print(f"Add {self.__ed_name.text()} ({self.__ed_year.text()}) from {self.__ed_direct.text()} with img: {self.__ed_img.text()}")
-        # add movie info to db
+        m = Movie(self.__ed_name.text(), self.__ed_direct.text(), int(self.__ed_year.text()), self.__ed_img.text())
+        self.__movie_handler.add_new_movie(m)
+
+    @QtCore.Slot()
+    def save_movies(self):
+        self.__movie_handler.export_movies()
