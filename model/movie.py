@@ -24,4 +24,4 @@ class Movie:
         return False
 
     def __str__(self) -> str:
-        return f"{self.__name} ({self.__year}) from {self.__director}"
+        return f"{self.__name} ({self.__year}) by {self.__director}"

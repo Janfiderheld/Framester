@@ -1,6 +1,6 @@
 import csv
+import random
 from typing import List
-
 from model import Movie
 
 
@@ -54,3 +54,6 @@ class MovieHandler:
 
         self.__movies.append(new_m)
         print(f"Movie {str(new_m)} is added with img: {new_m.get_img()}")
+
+    def return_rand_movie(self) -> Movie:
+        return random.choice(self.__movies)
