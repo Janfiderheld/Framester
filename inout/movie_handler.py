@@ -16,6 +16,7 @@ class MovieHandler:
 
     def __init__(self):
         self.__movies = self.import_movies()
+        self.__current_movies = self.__movies.copy()
         print(f"Imported {len(self.__movies)} movies from {MovieHandler.DATA_FILE}")
 
     def import_movies(self) -> List[Movie]:
@@ -56,4 +57,11 @@ class MovieHandler:
         print(f"Movie {str(new_m)} is added with img: {new_m.get_img()}")
 
     def return_rand_movie(self) -> Movie:
-        return random.choice(self.__movies)
+        if len(self.__current_movies) == 0:
+            self.reset_current_movie_list()
+        m = random.choice(self.__current_movies)
+        self.__current_movies.remove(m)
+        return m
+
+    def reset_current_movie_list(self):
+        self.__current_movies = self.__movies.copy()

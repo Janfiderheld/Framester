@@ -1,8 +1,8 @@
 import requests
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtGui import QPixmap
+
 from inout import MovieHandler
-from model import Movie
 
 
 class GameUI(QtWidgets.QWidget):
@@ -14,7 +14,7 @@ class GameUI(QtWidgets.QWidget):
 
         self.__movie_handler = MovieHandler()
         self.__curr_mov = None
-        self.__curr_mov = self.choose_random_movie()
+        self.__curr_mov = self.__movie_handler.return_rand_movie()
 
         self.__btn_show_mov = QtWidgets.QPushButton("Show New Movie")
         self.__btn_reveal = QtWidgets.QPushButton("Reveal Info")
@@ -59,17 +59,10 @@ class GameUI(QtWidgets.QWidget):
         h = min(self.__max_height * 0.8, self.__pix_img.height())
         return w, h
 
-    def choose_random_movie(self) -> Movie:
-        m = self.__movie_handler.return_rand_movie()
-        if m == self.__curr_mov:
-            return self.choose_random_movie()
-        else:
-            return m
-
     @QtCore.Slot()
     def show_new_mov(self):
         self.__txt_res.setText("")
-        self.__curr_mov = self.choose_random_movie()
+        self.__curr_mov = self.__movie_handler.return_rand_movie()
         self.get_img_from_url(self.__curr_mov.get_img())
 
     @QtCore.Slot()
