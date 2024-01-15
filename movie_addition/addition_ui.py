@@ -6,6 +6,7 @@ from model import Movie
 class AdditionUI(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+        self.__movie_handler = MovieHandler()
 
         self.__btn_add = QtWidgets.QPushButton("Add Movie")
         self.__btn_save = QtWidgets.QPushButton("Save additions")
@@ -34,7 +35,9 @@ class AdditionUI(QtWidgets.QWidget):
 
         self.__btn_add.clicked.connect(self.add_movie)
         self.__btn_save.clicked.connect(self.save_movies)
-        self.__movie_handler = MovieHandler()
+
+        self.resize(800, 600)
+        self.show()
 
     @QtCore.Slot()
     def add_movie(self):

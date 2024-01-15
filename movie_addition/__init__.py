@@ -1,1 +1,1 @@
-from .movie_addition_caller import add_new_movies
+from .addition_ui import AdditionUI

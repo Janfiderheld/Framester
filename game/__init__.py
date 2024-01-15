@@ -1,1 +1,1 @@
-from .game_starter import start_game
+from .game_ui import GameUI
