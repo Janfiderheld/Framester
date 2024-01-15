@@ -21,22 +21,23 @@ class MovieHandler:
 
     def import_movies(self) -> List[Movie]:
         _movies = []
-        with open(MovieHandler.DATA_FILE, mode='r') as csv_file:
+        with open(MovieHandler.DATA_FILE, mode='r', encoding='utf-8') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             for row in csv_reader:
-                m = Movie(row['Name'], row['Director'], int(row['Year']), row['Image URL'])
+                m = Movie(row['Name'], row['Name (German)'], row['Director'], int(row['Year']), row['Image URL'])
                 _movies.append(m)
         return _movies
 
     def export_movies(self):
-        with open(MovieHandler.DATA_FILE, mode='w', newline='') as csv_file:
-            fieldnames = ['Name', 'Director', 'Year', 'Image URL']
+        with open(MovieHandler.DATA_FILE, mode='w', newline='', encoding='utf-8') as csv_file:
+            fieldnames = ['Name', 'Name (German)', 'Director', 'Year', 'Image URL']
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
             writer.writeheader()
             for m in self.__movies:
                 writer.writerow({
                     'Name': m.get_name(),
+                    'Name(German)': m.get_german_name(),
                     'Director': m.get_director(),
                     'Year': m.get_year(),
                     'Image URL': m.get_img()

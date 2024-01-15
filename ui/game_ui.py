@@ -1,6 +1,6 @@
 import requests
 from PySide6 import QtWidgets, QtCore
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QFont
 
 from model import MovieHandler
 
@@ -21,9 +21,7 @@ class GameUI(QtWidgets.QWidget):
         self.__btn_exit = QtWidgets.QPushButton("Exit")
 
         self.__txt_res = QtWidgets.QLabel("")
-        self.__txt_res.setStyleSheet("""font:'SF Pro Display';
-                                        font-size:20pt;
-                                        font-weight:750;""")
+        self.__txt_res.setFont(QFont("Arial", 20))
 
         self.__lbl_img = QtWidgets.QLabel(self)
         self.__pix_img = QPixmap()
