@@ -1,12 +1,13 @@
-import movie_addition
-import inout
-import game
 import sys
+
 from PySide6 import QtWidgets
 
+import ui
+from model import MovieHandler
+
 if __name__ == "__main__":
-    m = inout.MovieHandler
+    m = MovieHandler
     app = QtWidgets.QApplication([])
-    #widget = movie_addition.AdditionUI()
-    widget = game.GameUI()
+    #widget = ui.AdditionUI()
+    widget = ui.GameUI()
     sys.exit(app.exec())

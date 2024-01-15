@@ -1,6 +1,6 @@
 from PySide6 import QtWidgets, QtCore
-from inout import MovieHandler
-from model import Movie
+
+from model import Movie, MovieHandler
 
 
 class AdditionUI(QtWidgets.QWidget):

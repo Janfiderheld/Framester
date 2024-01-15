@@ -2,7 +2,7 @@ import requests
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtGui import QPixmap
 
-from inout import MovieHandler
+from model import MovieHandler
 
 
 class GameUI(QtWidgets.QWidget):
