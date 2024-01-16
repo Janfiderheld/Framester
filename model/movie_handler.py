@@ -19,13 +19,18 @@ class MovieHandler:
         self.__current_movies = self.__movies.copy()
         print(f"Imported {len(self.__movies)} movies from {MovieHandler.DATA_FILE}")
 
-    def import_movies(self) -> List[Movie]:
+    @staticmethod
+    def import_movies() -> List[Movie]:
         _movies = []
-        with open(MovieHandler.DATA_FILE, mode='r', encoding='utf-8') as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            for row in csv_reader:
-                m = Movie(row['Name'], row['Name (German)'], row['Director'], int(row['Year']), row['Image URL'])
-                _movies.append(m)
+        try:
+            with open(MovieHandler.DATA_FILE, mode='r', encoding='utf-8') as csv_file:
+                csv_reader = csv.DictReader(csv_file)
+                for row in csv_reader:
+                    m = Movie(row['Name'], row['Name (German)'], row['Director'], int(row['Year']), row['Image URL'])
+                    _movies.append(m)
+        except Exception:
+            _movies.append(Movie("Test", "-", "Test", 2000, ""))
+
         return _movies
 
     def export_movies(self):
