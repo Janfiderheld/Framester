@@ -1,23 +1,16 @@
 import csv
 import random
 from typing import List
-from model import Movie
+from model import Movie, SingletonMeta
 
 
 # Singleton
-class MovieHandler:
+class MovieHandler(metaclass=SingletonMeta):
     DATA_FILE = "./data/movies.csv"
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(MovieHandler, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
 
     def __init__(self):
         self.__movies = self.import_movies()
         self.__current_movies = self.__movies.copy()
-        print(f"Imported {len(self.__movies)} movies from {MovieHandler.DATA_FILE}")
 
     @staticmethod
     def import_movies() -> List[Movie]:
@@ -31,6 +24,7 @@ class MovieHandler:
         except Exception:
             _movies.append(Movie("Test", "-", "Test", 2000, ""))
 
+        print(f"Imported {len(_movies)} movies from {MovieHandler.DATA_FILE}")
         return _movies
 
     def export_movies(self):
