@@ -5,6 +5,7 @@ from model import Movie
 
 class Player:
     MAX_TOKENS = 2
+    POINTS_TO_WIN = 8
 
     def __init__(self, name: str):
         self.__name = name
@@ -20,6 +21,9 @@ class Player:
 
     def get_timeline(self) -> List[Movie]:
         return self.__timeline
+
+    def check_win(self) -> bool:
+        return len(self.__timeline) >= self.POINTS_TO_WIN
 
     def reset(self):
         self.__tokens = Player.MAX_TOKENS
@@ -56,4 +60,4 @@ class Player:
         self.__timeline.insert(pos, m)
 
     def __str__(self) -> str:
-        return f"{self.__name} ({self.__tokens}/{Player.MAX_TOKENS} Tokens; Timeline: {len(self.__timeline)})"
+        return f"{self.__name} ({self.__tokens}/{Player.MAX_TOKENS} Tokens) - Timeline: {len(self.__timeline)}/{self.POINTS_TO_WIN}"
