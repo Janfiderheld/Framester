@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets, QtCore
 
 import ui
-from data import write_top250_to_csv
+from data import write_top250_to_csv, add_movies_from_top250
 from model import PlayerHandler, Player
 
 
@@ -67,6 +67,7 @@ class StartupUI(QtWidgets.QWidget):
     @QtCore.Slot()
     def import_top250(self):
         write_top250_to_csv()
+        add_movies_from_top250()
         print("Import of Top 250 from IMDB successful")
 
     @QtCore.Slot()

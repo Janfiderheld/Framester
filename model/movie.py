@@ -12,14 +12,23 @@ class Movie:
     def get_german_name(self) -> str:
         return self.__german_name
 
+    def set_german_name(self, de: str):
+        self.__german_name = de
+
     def get_director(self) -> str:
         return self.__director
+
+    def set_director(self, direct: str):
+        self.__director = direct
 
     def get_year(self) -> int:
         return self.__year
 
     def get_img(self) -> str:
         return self.__image
+
+    def set_img(self, url: str):
+        self.__image = url
 
     def __eq__(self, other) -> bool:
         """Overrides the default implementation"""
