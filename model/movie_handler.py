@@ -36,7 +36,7 @@ class MovieHandler(metaclass=SingletonMeta):
             for m in self.__movies:
                 writer.writerow({
                     'Name': m.get_name(),
-                    'Name(German)': m.get_german_name(),
+                    'Name (German)': m.get_german_name(),
                     'Director': m.get_director(),
                     'Year': m.get_year(),
                     'Image URL': m.get_img()
