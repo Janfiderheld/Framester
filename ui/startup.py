@@ -1,6 +1,7 @@
 from PySide6 import QtWidgets, QtCore
 
 import ui
+from data import write_top250_to_csv
 from model import PlayerHandler, Player
 
 
@@ -15,6 +16,8 @@ class StartupUI(QtWidgets.QWidget):
         self.__btn_start.clicked.connect(self.start_game)
         self.__btn_add_movie = QtWidgets.QPushButton("Add new Movie")
         self.__btn_add_movie.clicked.connect(self.add_movie)
+        self.__btn_import_250 = QtWidgets.QPushButton("Import IMDB Top 250 Movies")
+        self.__btn_import_250.clicked.connect(self.import_top250)
 
         self.__btn_add_player = QtWidgets.QPushButton("+")
         self.__btn_add_player.clicked.connect(self.add_player)
@@ -37,6 +40,7 @@ class StartupUI(QtWidgets.QWidget):
         self.layout.addLayout(self.layout_btn)
         self.layout.addWidget(self.__btn_start)
         self.layout.addWidget(self.__btn_add_movie)
+        self.layout.addWidget(self.__btn_import_250)
 
         self.resize(800, 600)
         self.show()
@@ -59,6 +63,11 @@ class StartupUI(QtWidgets.QWidget):
     def add_movie(self):
         self.__add_window = ui.AdditionUI()
         self.close()
+
+    @QtCore.Slot()
+    def import_top250(self):
+        write_top250_to_csv()
+        print("Import of Top 250 from IMDB successful")
 
     @QtCore.Slot()
     def add_player(self):
