@@ -54,7 +54,6 @@ class MovieHandler(metaclass=SingletonMeta):
             return
 
         self.__movies.append(new_m)
-        print(f"Movie {str(new_m)} is added with img: {new_m.get_img()}")
 
     def return_rand_movie(self) -> Movie:
         if len(self.__current_movies) == 0:
@@ -65,3 +64,6 @@ class MovieHandler(metaclass=SingletonMeta):
 
     def reset_current_movie_list(self):
         self.__current_movies = self.__movies.copy()
+
+    def get_movie_amount(self) -> int:
+        return len(self.__movies)

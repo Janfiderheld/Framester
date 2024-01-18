@@ -2,7 +2,7 @@ from PySide6 import QtWidgets, QtCore
 
 import ui
 from data import write_top250_to_csv, add_movies_from_top250
-from model import PlayerHandler, Player
+from model import PlayerHandler, Player, MovieHandler
 
 
 class StartupUI(QtWidgets.QWidget):
@@ -11,6 +11,7 @@ class StartupUI(QtWidgets.QWidget):
         self.__game_window = QtWidgets.QWidget()
         self.__add_window = QtWidgets.QWidget()
         self.__player_handler = PlayerHandler()
+        self.__movie_handler = MovieHandler()
 
         self.__btn_start = QtWidgets.QPushButton("Start Game")
         self.__btn_start.clicked.connect(self.start_game)
@@ -28,13 +29,21 @@ class StartupUI(QtWidgets.QWidget):
         self.__txt_header = QtWidgets.QLabel("Current Players:")
         self.__ed_player_name = QtWidgets.QLineEdit()
 
+        self.__txt_points = QtWidgets.QLabel("Timeline length for Winning:")
+        self.__ed_points = QtWidgets.QLineEdit(str(Player.max_points))
+
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout_btn = QtWidgets.QHBoxLayout(self)
+        self.layout_points = QtWidgets.QHBoxLayout(self)
 
         self.layout_btn.addWidget(self.__ed_player_name)
         self.layout_btn.addWidget(self.__btn_add_player)
         self.layout_btn.addWidget(self.__btn_rem_player)
 
+        self.layout_points.addWidget(self.__txt_points)
+        self.layout_points.addWidget(self.__ed_points)
+
+        self.layout.addLayout(self.layout_points)
         self.layout.addWidget(self.__txt_header)
         self.layout.addWidget(self.__player_list)
         self.layout.addLayout(self.layout_btn)
@@ -54,11 +63,33 @@ class StartupUI(QtWidgets.QWidget):
             self.__btn_start = dlg.exec()
             return
 
+        if not self.__ed_points.text():
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("There are no points specified")
+            self.__btn_start = dlg.exec()
+            return
+
+        if not self.__ed_points.text().isdigit():
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("The points are not a number")
+            self.__btn_start = dlg.exec()
+            return
+
+        if int(self.__ed_points.text())-1 * self.__player_list.count() > self.__movie_handler.get_movie_amount():
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("There are not enough movies for that many points")
+            self.__btn_start = dlg.exec()
+            return
+
         for idx in range(self.__player_list.count()):
             i = self.__player_list.item(idx)
             p = Player(i.text())
             self.__player_handler.add_new_player(p)
 
+        Player.max_points = int(self.__ed_points.text())
         self.__game_window = ui.GameUI()
         self.close()
 
