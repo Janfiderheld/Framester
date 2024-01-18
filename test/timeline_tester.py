@@ -1,6 +1,6 @@
 import unittest
 
-from model import Player, Movie, MovieHandler
+from model import Player, Movie
 
 
 class TimelineTest(unittest.TestCase):
