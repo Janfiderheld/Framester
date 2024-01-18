@@ -9,14 +9,16 @@ class AdditionUI(QtWidgets.QWidget):
         self.__movie_handler = MovieHandler()
 
         self.__btn_add = QtWidgets.QPushButton("Add Movie")
-        self.__btn_save = QtWidgets.QPushButton("Save additions")
+        self.__btn_save = QtWidgets.QPushButton("Save additions to CSV")
 
         self.__txt_name = QtWidgets.QLabel("Name:")
+        self.__txt_name_de = QtWidgets.QLabel("Name (German):")
         self.__txt_direct = QtWidgets.QLabel("Director:")
         self.__txt_year = QtWidgets.QLabel("Year:")
         self.__txt_img = QtWidgets.QLabel("Image URL:")
 
         self.__ed_name = QtWidgets.QLineEdit("")
+        self.__ed_name_de = QtWidgets.QLineEdit("")
         self.__ed_direct = QtWidgets.QLineEdit("")
         self.__ed_year = QtWidgets.QLineEdit("")
         self.__ed_img = QtWidgets.QLineEdit("")
@@ -24,6 +26,8 @@ class AdditionUI(QtWidgets.QWidget):
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.__txt_name)
         self.layout.addWidget(self.__ed_name)
+        self.layout.addWidget(self.__txt_name_de)
+        self.layout.addWidget(self.__ed_name_de)
         self.layout.addWidget(self.__txt_direct)
         self.layout.addWidget(self.__ed_direct)
         self.layout.addWidget(self.__txt_year)
@@ -44,6 +48,9 @@ class AdditionUI(QtWidgets.QWidget):
         if not self.__ed_name.text():
             print("Name is empty")
             return
+        if not self.__ed_name_de.text():
+            print("German name is empty")
+            return
         if not self.__ed_direct.text():
             print("Director is empty")
             return
@@ -57,7 +64,7 @@ class AdditionUI(QtWidgets.QWidget):
             print("Image URL is empty")
             return
 
-        m = Movie(self.__ed_name.text(), self.__ed_direct.text(), int(self.__ed_year.text()), self.__ed_img.text())
+        m = Movie(self.__ed_name.text(), self.__ed_name_de.text(), self.__ed_direct.text(), int(self.__ed_year.text()), self.__ed_img.text())
         self.__movie_handler.add_new_movie(m)
 
     @QtCore.Slot()
