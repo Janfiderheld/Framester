@@ -8,6 +8,5 @@ from model import MovieHandler
 if __name__ == "__main__":
     m = MovieHandler
     app = QtWidgets.QApplication([])
-    #widget = ui.AdditionUI()
-    widget = ui.GameUI()
+    widget = ui.StartupUI()
     sys.exit(app.exec())
