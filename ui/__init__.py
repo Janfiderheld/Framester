@@ -1,2 +1,2 @@
-from .game_ui import GameUI
-from .addition_ui import AdditionUI
+from .game import GameUI
+from .movie_addition import AdditionUI
