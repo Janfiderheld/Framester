@@ -35,7 +35,7 @@ def get_imdb_top_250_movies() -> List[Tuple[str, int]]:
 
 def write_top250_to_csv():
     movies = get_imdb_top_250_movies()
-    with open(FILE, "w", newline="") as out_file:
+    with open(FILE, mode='w', newline='', encoding='utf-8') as out_file:
         writer = csv.writer(out_file)
         writer.writerow(["Movie", "Year"])
         for m in movies:
