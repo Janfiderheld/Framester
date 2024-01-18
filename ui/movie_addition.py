@@ -46,22 +46,40 @@ class AdditionUI(QtWidgets.QWidget):
     @QtCore.Slot()
     def add_movie(self):
         if not self.__ed_name.text():
-            print("Name is empty")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Name is empty")
+            self.__btn_add = dlg.exec()
             return
         if not self.__ed_name_de.text():
-            print("German name is empty")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("German name is empty")
+            self.__btn_add = dlg.exec()
             return
         if not self.__ed_direct.text():
-            print("Director is empty")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Director is empty")
+            self.__btn_add = dlg.exec()
             return
         if not self.__ed_year.text():
-            print("Year is empty")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Year is empty")
+            self.__btn_add = dlg.exec()
             return
         if not self.__ed_year.text().isdigit():
-            print("Year is not a number")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Year is not a number!")
+            self.__btn_add = dlg.exec()
             return
         if not self.__ed_img.text():
-            print("Image URL is empty")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Image URL is empty")
+            self.__btn_add = dlg.exec()
             return
 
         m = Movie(self.__ed_name.text(), self.__ed_name_de.text(), self.__ed_direct.text(), int(self.__ed_year.text()), self.__ed_img.text())

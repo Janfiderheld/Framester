@@ -48,7 +48,10 @@ class StartupUI(QtWidgets.QWidget):
     @QtCore.Slot()
     def start_game(self):
         if self.__player_list.count() == 0:
-            print("No Players")
+            dlg = QtWidgets.QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("There are no players")
+            self.__btn_start = dlg.exec()
             return
 
         for idx in range(self.__player_list.count()):
@@ -68,7 +71,10 @@ class StartupUI(QtWidgets.QWidget):
     def import_top250(self):
         write_top250_to_csv()
         add_movies_from_top250()
-        print("Import of Top 250 from IMDB successful")
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("Info")
+        dlg.setText("Import of the IMDB Top250 Movies successful.")
+        self.__btn_import_250 = dlg.exec()
 
     @QtCore.Slot()
     def add_player(self):
