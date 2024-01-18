@@ -17,7 +17,7 @@ class GameUI(QtWidgets.QWidget):
         self.__curr_mov = None
         self.__curr_mov = self.__movie_handler.return_rand_movie()
 
-        self.__btn_show_mov = QtWidgets.QPushButton("Show New Movie")
+        self.__btn_show_mov = QtWidgets.QPushButton("Show Next Movie")
         self.__btn_show_mov.clicked.connect(self.show_new_mov)
         self.__btn_reveal = QtWidgets.QPushButton("Reveal Answer")
         self.__btn_reveal.clicked.connect(self.reveal_info)
@@ -97,6 +97,7 @@ class GameUI(QtWidgets.QWidget):
     def show_new_mov(self):
         self.__txt_res.setText("")
         self.__curr_mov = self.__movie_handler.return_rand_movie()
+        self.__player_handler.goto_next_player()
         self.update_layout(False, True)
 
     @QtCore.Slot()
