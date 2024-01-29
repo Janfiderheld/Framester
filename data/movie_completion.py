@@ -8,7 +8,8 @@ import tmdbv3api
 
 from model import Movie, MovieHandler
 
-FILE = "./data/top_250.csv"
+TOP_250_FILE = "./data/top_250.csv"
+OSCARS_2024_FILE = "./data/oscars_2024.csv"
 
 
 def init_tmdb_api():
@@ -20,7 +21,17 @@ def init_tmdb_api():
 
 def import_top250_movies() -> List[Movie]:
     _movies = []
-    with open(FILE, mode='r', encoding='utf-8') as csv_file:
+    with open(TOP_250_FILE, mode='r', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            m = Movie(row['Movie'], "", "", int(row['Year']), "")
+            _movies.append(m)
+    return _movies
+
+
+def import_oscars2024_movies() -> List[Movie]:
+    _movies = []
+    with open(OSCARS_2024_FILE, mode='r', encoding='utf-8') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             m = Movie(row['Movie'], "", "", int(row['Year']), "")
@@ -62,11 +73,15 @@ def get_director(m_id: int) -> str:
     return all_directors
 
 
-def add_movies_from_top250():
+def add_movies(top250=True):
     init_tmdb_api()
     movie_handler = MovieHandler()
-    top250 = import_top250_movies()
-    fill_missing_info(top250)
-    for m in top250:
+    movies = []
+    if top250:
+        movies = import_top250_movies()
+    else:
+        movies = import_oscars2024_movies()
+    fill_missing_info(movies)
+    for m in movies:
         movie_handler.add_new_movie(m)
     movie_handler.export_movies()
