@@ -1,6 +1,7 @@
 import requests
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtGui import QPixmap, QFont
+from PySide6.QtWidgets import QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QRadioButton
 
 from model import MovieHandler, PlayerHandler
 
@@ -14,25 +15,27 @@ class GameUI(QtWidgets.QWidget):
 
         self.__movie_handler = MovieHandler()
         self.__player_handler = PlayerHandler()
-        self.__curr_mov = None
         self.__curr_mov = self.__movie_handler.return_rand_movie()
 
-        self.__btn_show_mov = QtWidgets.QPushButton("Show Next Movie")
+        self.__btn_show_mov = QPushButton("Show Next Movie")
         self.__btn_show_mov.clicked.connect(self.show_new_mov)
-        self.__btn_reveal = QtWidgets.QPushButton("Reveal Answer")
+        self.__btn_reveal = QPushButton("Reveal Answer")
         self.__btn_reveal.clicked.connect(self.reveal_info)
-        self.__btn_exit = QtWidgets.QPushButton("Exit")
+        self.__btn_exit = QPushButton("Exit")
         self.__btn_exit.clicked.connect(self.exit)
 
-        self.__txt_res = QtWidgets.QLabel("")
+        self.__txt_res = QLabel("")
         self.__txt_res.setFont(QFont("Arial", 20))
-        self.__txt_player = QtWidgets.QLabel(f"{str(self.__player_handler.return_current_player())}")
+        self.__txt_res.setWordWrap(True)  # Wrap long text
+        self.__txt_res.setAlignment(QtCore.Qt.AlignCenter)  # Center-align text
+
+        self.__txt_player = QLabel(f"{str(self.__player_handler.return_current_player())}")
         self.__txt_player.setFont(QFont("Arial", 24))
 
-        self.__lbl_img = QtWidgets.QLabel(self)
+        self.__lbl_img = QLabel(self)
         self.__pix_img = QPixmap()
 
-        self.layout_top = QtWidgets.QVBoxLayout(self)
+        self.layout_top = QVBoxLayout(self)
         self.layout_top.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter)
         self.layout_time = self.visualise_timeline()
 
@@ -46,7 +49,7 @@ class GameUI(QtWidgets.QWidget):
         self.__btn_show_mov.setVisible(show_btn)
         self.__btn_reveal.setVisible(rev_btn)
 
-        self.__txt_player = QtWidgets.QLabel(f"{str(self.__player_handler.return_current_player())}")
+        self.__txt_player = QLabel(f"{str(self.__player_handler.return_current_player())}")
         self.__txt_player.setFont(QFont("Arial", 24))
         self.get_img_from_url(self.__curr_mov.get_img())
         self.layout_time = self.visualise_timeline()
@@ -55,13 +58,12 @@ class GameUI(QtWidgets.QWidget):
         self.layout_top.addLayout(self.layout_time)
         self.layout_top.addWidget(self.__lbl_img)
         self.layout_top.addWidget(self.__txt_res)
-
         self.layout_top.addWidget(self.__btn_show_mov)
         self.layout_top.addWidget(self.__btn_reveal)
         self.layout_top.addWidget(self.__btn_exit)
 
     @staticmethod
-    def clear_layout(layout: QtWidgets.QLayout):
+    def clear_layout(layout: QVBoxLayout):
         for i in reversed(range(layout.count())):
             widget = layout.itemAt(i).widget()
             if widget:
@@ -79,15 +81,15 @@ class GameUI(QtWidgets.QWidget):
         h = min(self.__max_height * 0.8, self.__pix_img.height())
         return w, h
 
-    def visualise_timeline(self) -> QtWidgets.QHBoxLayout:
+    def visualise_timeline(self) -> QHBoxLayout:
         p = self.__player_handler.return_current_player()
-        box = QtWidgets.QHBoxLayout(self)
-        rb0 = QtWidgets.QRadioButton("", self)
+        box = QHBoxLayout(self)
+        rb0 = QRadioButton("", self)
         box.addWidget(rb0)
 
         for m in p.get_timeline():
-            lbl = QtWidgets.QLabel(f"{m.get_year()}")
-            rb = QtWidgets.QRadioButton("", self)
+            lbl = QLabel(f"{m.get_year()}")
+            rb = QRadioButton("", self)
             box.addWidget(lbl)
             box.addWidget(rb)
 
@@ -102,7 +104,8 @@ class GameUI(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def reveal_info(self):
-        rbs = [self.layout_time.itemAt(i).widget() for i in range(self.layout_time.count()) if isinstance(self.layout_time.itemAt(i).widget(), QtWidgets.QRadioButton)]
+        rbs = [self.layout_time.itemAt(i).widget() for i in range(self.layout_time.count()) if
+               isinstance(self.layout_time.itemAt(i).widget(), QRadioButton)]
         c_check = 0
         c_all = 0
         idx = 0

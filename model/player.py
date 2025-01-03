@@ -1,4 +1,3 @@
-import sys
 from typing import List
 
 from model import Movie
@@ -37,24 +36,21 @@ class Player:
         if len(self.__timeline) == 0:
             return True
 
-        first = sys.maxsize
-        last = -1
-        for t in self.__timeline:
-            idx = self.__timeline.index(t)
+        first = 0
+        last = len(self.__timeline)
+
+        for idx, t in enumerate(self.__timeline):
             # Case 1: t is older
             if t.get_year() < m.get_year():
                 first = idx + 1
-                last = idx + 1
-                continue
             # Case 2: both movies are from the same year
-            if t.get_year() == m.get_year():
+            elif t.get_year() == m.get_year():
                 first = min(idx, first)
-                last = max(idx+1, last)
-                continue
+                last = max(idx + 1, last)
             # Case 3: new movie is older
-            if m.get_year() < t.get_year():
-                first = idx
-                last = idx
+            else:
+                last = min(idx, last)
+
         return first <= pos <= last
 
     def add_to_timeline(self, m: Movie, pos: int):
