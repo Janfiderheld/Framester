@@ -3,6 +3,7 @@ from PySide6 import QtWidgets, QtCore
 import ui
 from data import write_top250_to_csv, add_movies
 from model import PlayerHandler, Player, MovieHandler
+from printing import prepare_printing
 
 
 class StartupUI(QtWidgets.QWidget):
@@ -21,6 +22,8 @@ class StartupUI(QtWidgets.QWidget):
         self.__btn_import_250.clicked.connect(self.import_top250)
         self.__btn_import_oscars = QtWidgets.QPushButton("Import Academy Awards 2024 and 2025 Nominees")
         self.__btn_import_oscars.clicked.connect(self.import_oscars)
+        self.__btn_printing = QtWidgets.QPushButton("Prepare files for printing")
+        self.__btn_printing.clicked.connect(self.start_print_prep)
 
         self.__btn_add_player = QtWidgets.QPushButton("+")
         self.__btn_add_player.clicked.connect(self.add_player)
@@ -53,6 +56,7 @@ class StartupUI(QtWidgets.QWidget):
         self.layout.addWidget(self.__btn_add_movie)
         self.layout.addWidget(self.__btn_import_250)
         self.layout.addWidget(self.__btn_import_oscars)
+        self.layout.addWidget(self.__btn_printing)
 
         self.resize(800, 600)
         self.show()
@@ -80,7 +84,7 @@ class StartupUI(QtWidgets.QWidget):
             self.__btn_start = dlg.exec()
             return
 
-        if int(self.__ed_points.text())-1 * self.__player_list.count() > self.__movie_handler.get_movie_amount():
+        if int(self.__ed_points.text()) - 1 * self.__player_list.count() > self.__movie_handler.get_movie_amount():
             dlg = QtWidgets.QMessageBox(self)
             dlg.setWindowTitle("Error")
             dlg.setText("There are not enough movies for that many points")
@@ -117,6 +121,11 @@ class StartupUI(QtWidgets.QWidget):
         dlg.setWindowTitle("Info")
         dlg.setText("Import of the Academy Awards 2024 & 2025 Nominees successful.")
         self.__btn_import_oscars = dlg.exec()
+
+    @QtCore.Slot()
+    def start_print_prep(self):
+        assert self.__movie_handler.get_movie_amount() > 1
+        prepare_printing(self.__movie_handler.copy_all_movies())
 
     @QtCore.Slot()
     def add_player(self):

@@ -1,6 +1,7 @@
 import csv
 import random
 from typing import List
+
 from model import Movie, SingletonMeta
 
 
@@ -10,7 +11,7 @@ class MovieHandler(metaclass=SingletonMeta):
 
     def __init__(self):
         self.__movies = self.import_movies()
-        self.__current_movies = self.__movies.copy()
+        self.__current_movies = self.copy_all_movies()
 
     @staticmethod
     def import_movies() -> List[Movie]:
@@ -21,7 +22,8 @@ class MovieHandler(metaclass=SingletonMeta):
                 for row in csv_reader:
                     m = Movie(row['Name'], row['Name (German)'], row['Director'], int(row['Year']), row['Image URL'])
                     _movies.append(m)
-        except Exception:
+        except Exception as ex:
+            print(f"Error importing the movies: {ex}")
             _movies.append(Movie("Test", "-", "Test", 2000, ""))
 
         print(f"Imported {len(_movies)} movies from {MovieHandler.DATA_FILE}")
@@ -63,7 +65,10 @@ class MovieHandler(metaclass=SingletonMeta):
         return m
 
     def reset_current_movie_list(self):
-        self.__current_movies = self.__movies.copy()
+        self.__current_movies = self.copy_all_movies()
 
     def get_movie_amount(self) -> int:
         return len(self.__movies)
+
+    def copy_all_movies(self) -> List[Movie]:
+        return self.__movies.copy()

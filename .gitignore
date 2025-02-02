@@ -161,3 +161,4 @@ cython_debug/
 .vector_cache/
 
 credentials.json
+printing/front
