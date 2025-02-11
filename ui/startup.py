@@ -20,6 +20,8 @@ class StartupUI(QtWidgets.QWidget):
         self.__btn_add_movie.clicked.connect(self.add_movie)
         self.__btn_import_250 = QtWidgets.QPushButton("Import IMDB Top 250 Movies")
         self.__btn_import_250.clicked.connect(self.import_top250)
+        self.__btn_upd_250 = QtWidgets.QPushButton("Update IMDB Top 250 Movies")
+        self.__btn_upd_250.clicked.connect(self.update_top250)
         self.__btn_import_oscars = QtWidgets.QPushButton("Import Academy Awards 2024 and 2025 Nominees")
         self.__btn_import_oscars.clicked.connect(self.import_oscars)
         self.__btn_printing = QtWidgets.QPushButton("Prepare files for printing")
@@ -55,6 +57,7 @@ class StartupUI(QtWidgets.QWidget):
         self.layout.addWidget(self.__btn_start)
         self.layout.addWidget(self.__btn_add_movie)
         self.layout.addWidget(self.__btn_import_250)
+        self.layout.addWidget(self.__btn_upd_250)
         self.layout.addWidget(self.__btn_import_oscars)
         self.layout.addWidget(self.__btn_printing)
 
@@ -107,12 +110,21 @@ class StartupUI(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def import_top250(self):
-        write_top250_to_csv()
+        write_top250_to_csv(False)
         add_movies(True)
         dlg = QtWidgets.QMessageBox(self)
         dlg.setWindowTitle("Info")
         dlg.setText("Import of the IMDB Top250 Movies successful.")
         self.__btn_import_250 = dlg.exec()
+
+    @QtCore.Slot()
+    def update_top250(self):
+        write_top250_to_csv(True)
+        add_movies(True)
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("Info")
+        dlg.setText("Update of the IMDB Top250 Movies successful.")
+        self.__btn_upd_250 = dlg.exec()
 
     @QtCore.Slot()
     def import_oscars(self):
