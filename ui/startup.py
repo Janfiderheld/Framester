@@ -138,6 +138,10 @@ class StartupUI(QtWidgets.QWidget):
     def start_print_prep(self):
         assert self.__movie_handler.get_movie_amount() > 1
         prepare_printing(self.__movie_handler.copy_all_movies())
+        dlg = QtWidgets.QMessageBox(self)
+        dlg.setWindowTitle("Info")
+        dlg.setText(f"Printing preparations successful for {self.__movie_handler.get_movie_amount()} movies.")
+        self.__btn_printing = dlg.exec()
 
     @QtCore.Slot()
     def add_player(self):

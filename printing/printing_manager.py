@@ -117,6 +117,5 @@ def prepare_printing(movies: [Movie]):
     for m in movies:
         time.sleep(0.5)
         get_front_image(counter, m)
-        # create_back_image(counter, m)
+        create_back_image(counter, m)
         counter += 1
-    print("Printing preparation complete.")
