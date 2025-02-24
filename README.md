@@ -21,6 +21,11 @@ If you want to update your movie list, you can either do it manually (see the op
 }
 ```
 
+## Printing a Physical Version
+
+You can't get enough and want to keep playing, even if you have no computer available?
+Don't worry, [here](./printing/README.md) you can find the instructions to create a printed version for yourself.
+
 ## Future Improvements
 
 Here are some ideas for future improvements that I may or may not add someday:
