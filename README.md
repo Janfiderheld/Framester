@@ -10,7 +10,11 @@ Before playing the game, you need to add the players (at least 1). Then, the pla
 
 ## Movies
 
-The movies that are shown are extracted from [IMDBs Top 250 movie list](https://www.imdb.com/chart/top/?ref_=nv_mv_250) (plus ~20 movies added manually by me for testing purposes). For each movie, we save the (english and german) name, the release year, the director(s) and the link to an image. The linked images are found in the [TMDB](https://www.themoviedb.org/). To access TMDB we use [this API](https://github.com/AnthonyBloomer/tmdbv3api).
+The movies that are shown are extracted from [IMDBs Top 250 movie list](https://www.imdb.com/chart/top/?ref_=nv_mv_250), plus some movies added manually for testing purposes and all movies with at least two oscar nominations in 2024 and 2025.
+A list of all movies currently part of the game can be found on [Letterboxd](https://boxd.it/EIZoW$zl0rTwgLLVbLNfm3).
+For each movie, the (english and german) name, the release year, the director(s) and the link to an image is saved.
+The linked images are found in the [TMDB](https://www.themoviedb.org/).
+To access TMDB we use [this API](https://github.com/AnthonyBloomer/tmdbv3api).
 
 If you want to update your movie list, you can either do it manually (see the option in the StartupUI) or by importing the current version of the IMDB Top 250 movies. For this, you need your TMDB API Key as follows: Create a file called "credentials.json" in the root folder in which you save both keys provided by TMDB:
 
